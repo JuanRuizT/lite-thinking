@@ -1,0 +1,39 @@
+getCompanies:
+  handler: src/handlers/companies/getCompanies.handler
+  events:
+    - http:
+        path: /companies
+        method: get
+        cors: true
+
+getCompanyById:
+  handler: src/handlers/companies/getCompany.handler
+  events:
+    - http:
+        path: /companies/{id}
+        method: get
+        cors: true
+
+postCompany:
+  handler: src/handlers/companies/createCompany.handler
+  events:
+    - http:
+        path: /companies
+        method: post
+        cors: true
+
+putCompany:
+  handler: src/handlers/companies/updateCompany.handler
+  events:
+    - http:
+        path: /companies/{id}
+        method: put
+        cors: true
+
+deleteCompany:
+  handler: src/handlers/companies/deleteCompany.handler
+  events:
+    - http:
+        path: /companies/{id}
+        method: delete
+        cors: true

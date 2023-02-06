@@ -1,0 +1,40 @@
+service: litethinking
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-webpack
+  - serverless-iam-roles-per-function
+
+# Webpack configuration
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  memorySize: 256
+  stage: ${opt:stage, "dev"}
+  region: "us-east-2"
+  environment:
+    COMPANIES_TABLE_NAME: ${self:custom.CompaniesTable.name}
+    ARTICLES_TABLE_NAME: ${self:custom.ArticlesTable.name}
+  iamRoleStatements:
+    - ${file(resources/iam/CompaniesTable.yml):CompaniesTable}
+    - ${file(resources/iam/ArticlesTable.yml):ArticlesTable}
+
+functions:
+  - ${file(resources/functions/CompaniesAPI.yml)}
+  - ${file(resources/functions/ArticlesAPI.yml)}
+
+resources:
+  - ${file(resources/auth/Cognito.yml)}
+  - ${file(resources/database/Model.yml)}
+
+custom:
+  CompaniesTable:
+    name: !Ref CompaniesTable
+    arn: !GetAtt CompaniesTable.Arn
+  ArticlesTable:
+    name: !Ref ArticlesTable
+    arn: !GetAtt ArticlesTable.Arn

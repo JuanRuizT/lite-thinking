@@ -1,0 +1,31 @@
+getArticles:
+  handler: src/handlers/articles/getArticlesByCompanyId.handler
+  events:
+    - http:
+        path: /articles
+        method: get
+        cors: true
+
+postArticle:
+  handler: src/handlers/articles/createArticle.handler
+  events:
+    - http:
+        path: /articles
+        method: post
+        cors: true
+
+updateArticle:
+  handler: src/handlers/articles/updateArticle.handler
+  events:
+    - http:
+        path: /articles/{id}
+        method: put
+        cors: true
+        
+deleteArticle:
+  handler: src/handlers/articles/deleteArticle.handler
+  events:
+    - http:
+        path: /articles/{id}
+        method: delete
+        cors: true

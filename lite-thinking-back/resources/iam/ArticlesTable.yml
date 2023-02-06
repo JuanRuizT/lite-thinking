@@ -1,0 +1,12 @@
+ArticlesTable:
+  Effect: Allow
+  Action:
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:DeleteItem
+    - dynamodb:Query
+    - dynamodb:Scan
+  Resource: 
+    - ${self:custom.ArticlesTable.arn}
+    - !Join ['/', [ '${self:custom.ArticlesTable.arn}', 'index', 'companyId' ]]

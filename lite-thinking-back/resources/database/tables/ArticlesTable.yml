@@ -1,0 +1,23 @@
+ArticlesTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: Articles-${self:provider.stage}
+    BillingMode: PAY_PER_REQUEST
+
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: companyId
+        AttributeType: S
+
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+
+    GlobalSecondaryIndexes:
+      - IndexName: companyId
+        KeySchema:
+          - AttributeName: companyId
+            KeyType: HASH
+        Projection:
+            ProjectionType: ALL

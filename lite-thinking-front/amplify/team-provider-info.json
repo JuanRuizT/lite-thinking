@@ -1,0 +1,27 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-litethinking-dev-211740-authRole",
+      "UnauthRoleArn": "arn:aws:iam::845311159212:role/amplify-litethinking-dev-211740-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::845311159212:role/amplify-litethinking-dev-211740-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-litethinking-dev-211740-deployment",
+      "UnauthRoleName": "amplify-litethinking-dev-211740-unauthRole",
+      "StackName": "amplify-litethinking-dev-211740",
+      "StackId": "arn:aws:cloudformation:us-east-2:845311159212:stack/amplify-litethinking-dev-211740/c6ac8c10-a29f-11ed-9c8d-067a1a1d8876",
+      "AmplifyAppId": "d2bzy8mh4mjwfc"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "litethinkingc67e1fb3c67e1fb3": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2bzy8mh4mjwfc",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}

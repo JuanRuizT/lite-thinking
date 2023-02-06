@@ -1,0 +1,3 @@
+Resources:
+  ArticlesTable: ${file(resources/database/tables/ArticlesTable.yml):ArticlesTable}
+  CompaniesTable: ${file(resources/database/tables/CompaniesTable.yml):CompaniesTable}
