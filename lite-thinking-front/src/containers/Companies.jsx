@@ -5,8 +5,8 @@ import {useNavigate} from 'react-router-dom';
 import {Delete, Edit, Visibility} from '@mui/icons-material';
 import CreateElement from '../components/ui/CreateElement';
 import {getCompanies, insertCompany, updateCompany, deleteCompany} from '../api/companies';
-import {validateEmail, validateAge, validateRequired, renderElement} from '../utils/validators';
-import {useAuthContext} from '../context/AuthContext';
+import {validateEmail, validateAge, validateRequired} from '../utils/validators';
+// import {useAuthContext} from '../context/AuthContext';
 
 const Companies = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -14,7 +14,7 @@ const Companies = () => {
 	const [validationErrors, setValidationErrors] = useState({});
 	const navigate = useNavigate();
 
-	const {user} = useAuthContext();
+	// const {user} = useAuthContext();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -142,7 +142,7 @@ const Companies = () => {
 			},
 			{
 				accessorKey: 'articles',
-				header: 'Articles',
+				header: 'Inventory',
 				enableEditing: false,
 				Cell: (event) => (
 					<Tooltip arrow placement="left" title="See the Articles of the company">
@@ -164,7 +164,8 @@ const Companies = () => {
 						columns={columns}
 						data={companies}
 						editingMode="modal"
-						enableEditing={user?.groups?.includes('admins') ?? false}
+						// enableEditing={user?.groups?.includes('admins') ?? false}
+						enableEditing
 						enableFilters={false}
 						onEditingRowSave={handleUpdateRow}
 						onEditingRowCancel={handleCancelRowEdits}
@@ -188,7 +189,13 @@ const Companies = () => {
 			</div>
 			<div className="row">
 				<div className="col-12 p-3 text-center">
-					{renderElement(
+					<Button
+						style={{color: 'black', borderColor: 'black'}}
+						onClick={() => setCreateModalOpen(true)}
+						variant="outlined">
+						Create New Company
+					</Button>
+					{/* {renderElement(
 						user,
 						<Button
 							style={{color: 'black', borderColor: 'black'}}
@@ -196,11 +203,11 @@ const Companies = () => {
 							variant="outlined">
 							Create New Company
 						</Button>
-					)}
+					)} */}
 				</div>
 			</div>
 			<CreateElement
-				columns={columns}
+				columns={columns.filter((column) => column.header !== 'Inventory')}
 				open={createModalOpen}
 				onClose={() => setCreateModalOpen(false)}
 				onSubmit={handleCreateNewRow}

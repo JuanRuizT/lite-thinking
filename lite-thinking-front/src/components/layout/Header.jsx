@@ -5,12 +5,15 @@ import {Image} from '@aws-amplify/ui-react';
 import {useNavigate} from 'react-router-dom';
 import logo from '../../assets/logo2.png';
 import DrawerComp from './Drawer';
+import {useAuthContext} from '../../context/AuthContext';
 
 const Header = () => {
 	const navigate = useNavigate();
 	const [value, setValue] = useState(0);
 	const theme = useTheme();
-	const isMatch = useMediaQuery(theme.breakpoints.down('md'));
+	const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+
+	const {user} = useAuthContext();
 
 	const signOutFunction = () => {
 		Auth.signOut();
@@ -34,10 +37,11 @@ const Header = () => {
 							<Tab label="Companies" style={{color: 'white'}} onClick={() => navigate('/companies')} />
 							{/* <Tab label="Articles" style={{color: 'white'}} /> */}
 						</Tabs>
-						<Button
-							style={{color: 'white', marginLeft: 'auto', borderColor: 'white'}}
-							variant="outlined"
-							onClick={signOutFunction}>
+						<div className="row justify-content-center" style={{color: 'white', marginLeft: 'auto'}}>
+							<div className="col-7">{user.email}</div>
+							<div className="col-7">Role: {user?.groups ?? 'Visitors'}</div>
+						</div>
+						<Button style={{color: 'white', borderColor: 'white'}} variant="outlined" onClick={signOutFunction}>
 							Logout
 						</Button>
 					</>

@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo, useState, useEffect} from 'react';
 import MaterialReactTable from 'material-react-table';
 import {Box, Button, IconButton, Tooltip} from '@mui/material';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {Delete, Edit} from '@mui/icons-material';
 import CreateElement from '../components/ui/CreateElement';
 import {getArticlesByCompanyId, insertArticle, updateArticle, deleteArticle} from '../api/articles';
@@ -15,7 +15,7 @@ const Articles = () => {
 	const [company, setCompany] = useState({});
 
 	const [validationErrors, setValidationErrors] = useState({});
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const location = useLocation();
 	const companyId = location.state?.companyId ?? '';
@@ -181,6 +181,12 @@ const Articles = () => {
 							Create New Article
 						</Button>
 					)}
+					<Button
+						style={{color: 'black', marginLeft: '10px', borderColor: 'black'}}
+						variant="outlined"
+						onClick={() => navigate('/companies')}>
+						Back
+					</Button>
 				</div>
 			</div>
 			<CreateElement
