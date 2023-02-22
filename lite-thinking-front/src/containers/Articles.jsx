@@ -8,6 +8,7 @@ import {getArticlesByCompanyId, insertArticle, updateArticle, deleteArticle} fro
 import {getCompany} from '../api/companies';
 import {validateEmail, validateAge, validateRequired, renderElement} from '../utils/validators';
 import {useAuthContext} from '../context/AuthContext';
+import {downloadPDF} from '../api/pdf';
 
 const Articles = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -32,6 +33,11 @@ const Articles = () => {
 		};
 		fetchData();
 	}, []);
+
+	const handleDownloadPDF = async (companyId) => {
+		console.log(companyId);
+		await downloadPDF(companyId);
+	};
 
 	const handleCreateNewRow = async (values) => {
 		const newArticle = {...values, companyId};
@@ -175,7 +181,16 @@ const Articles = () => {
 					{renderElement(
 						user,
 						<Button
-							style={{color: 'black', borderColor: 'black'}}
+							style={{color: 'red', borderColor: 'black'}}
+							onClick={() => handleDownloadPDF(companyId)}
+							variant="outlined">
+							Download PDF
+						</Button>
+					)}
+					{renderElement(
+						user,
+						<Button
+							style={{color: 'black', marginLeft: '10px', borderColor: 'black'}}
 							onClick={() => setCreateModalOpen(true)}
 							variant="outlined">
 							Create New Article
