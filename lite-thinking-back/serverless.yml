@@ -1,12 +1,12 @@
 service: litethinking
 
-frameworkVersion: "3"
+frameworkVersion: '3'
 
 plugins:
-  - serverless-webpack
+  - serverless-offline
+  - serverless-esbuild
   - serverless-iam-roles-per-function
 
-# Webpack configuration
 package:
   individually: true
 
@@ -15,20 +15,23 @@ provider:
   runtime: nodejs16.x
   memorySize: 256
   stage: ${opt:stage, "dev"}
-  region: "us-east-2"
+  region: 'us-east-2'
   environment:
     COMPANIES_TABLE_NAME: ${self:custom.CompaniesTable.name}
     ARTICLES_TABLE_NAME: ${self:custom.ArticlesTable.name}
   iamRoleStatements:
     - ${file(resources/iam/CompaniesTable.yml):CompaniesTable}
     - ${file(resources/iam/ArticlesTable.yml):ArticlesTable}
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
 
 functions:
   - ${file(resources/functions/CompaniesAPI.yml)}
   - ${file(resources/functions/ArticlesAPI.yml)}
+  - ${file(resources/functions/PdfAPI.yml)}
 
 resources:
-  - ${file(resources/auth/Cognito.yml)}
   - ${file(resources/database/Model.yml)}
 
 custom:
@@ -38,3 +41,6 @@ custom:
   ArticlesTable:
     name: !Ref ArticlesTable
     arn: !GetAtt ArticlesTable.Arn
+  esbuild:
+    external:
+      - pdfkit

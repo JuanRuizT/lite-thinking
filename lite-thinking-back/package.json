@@ -5,8 +5,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.110",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "esbuild": "^0.16.17",
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.4",
+    "serverless-esbuild": "^1.39.0",
     "serverless-iam-roles-per-function": "^3.2.0",
-    "serverless-webpack": "^5.11.0"
+    "serverless-offline": "^12.0.4"
   },
   "dependencies": {
     "@middy/core": "^4.2.3",
@@ -16,6 +22,8 @@
     "@middy/http-json-body-parser": "^4.2.3",
     "aws-sdk": "^2.1309.0",
     "http-errors": "^2.0.0",
+    "pdfkit": "^0.13.0",
+    "pdfkit-construct": "^1.2.3",
     "uuid": "^9.0.0"
   }
 }

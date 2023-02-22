@@ -6,7 +6,7 @@ getCompanies:
         method: get
         cors: true
 
-getCompanyById:
+getCompany:
   handler: src/handlers/companies/getCompany.handler
   events:
     - http:

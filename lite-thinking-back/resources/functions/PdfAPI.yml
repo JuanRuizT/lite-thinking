@@ -1,0 +1,7 @@
+getPdf:
+  handler: src/handlers/pdf/getPdf.handler
+  events:
+    - http:
+        path: /pdf
+        method: get
+        cors: true

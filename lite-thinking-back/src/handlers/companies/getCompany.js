@@ -1,14 +1,14 @@
-import commonMiddleware from "../../lib/commonMiddleware";
-import { getCompanyById } from "../../lib/getCompanyById";
+import commonMiddleware from '../../lib/commonMiddleware';
+import {getCompany} from '../../services/companyService';
 
-const getCompany = async (event, context) => {
-  const { id } = event.pathParameters;
-  const company = await getCompanyById(id);
+const response = async (event, context) => {
+	const {id} = event.pathParameters;
+	const company = await getCompany(id);
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(company),
-  };
+	return {
+		statusCode: 200,
+		body: JSON.stringify(company)
+	};
 };
 
-export const handler = commonMiddleware(getCompany);
+export const handler = commonMiddleware(response);
