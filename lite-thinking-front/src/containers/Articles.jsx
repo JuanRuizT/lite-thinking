@@ -9,6 +9,7 @@ import {getCompany} from '../api/companies';
 import {validateEmail, validateAge, validateRequired, renderElement} from '../utils/validators';
 import {useAuthContext} from '../context/AuthContext';
 import {downloadPDF} from '../api/pdf';
+import EmailModal from '../components/ui/EmailModal';
 
 const Articles = () => {
 	const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -35,7 +36,6 @@ const Articles = () => {
 	}, []);
 
 	const handleDownloadPDF = async (companyId) => {
-		console.log(companyId);
 		await downloadPDF(companyId);
 	};
 
@@ -187,6 +187,7 @@ const Articles = () => {
 							Download PDF
 						</Button>
 					)}
+					{renderElement(user, <EmailModal companyId={companyId} />)}
 					{renderElement(
 						user,
 						<Button

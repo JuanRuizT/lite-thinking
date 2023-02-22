@@ -22,6 +22,7 @@ provider:
   iamRoleStatements:
     - ${file(resources/iam/CompaniesTable.yml):CompaniesTable}
     - ${file(resources/iam/ArticlesTable.yml):ArticlesTable}
+    - ${file(resources/iam/SES.yml):SES}
   apiGateway:
     binaryMediaTypes:
       - '*/*'

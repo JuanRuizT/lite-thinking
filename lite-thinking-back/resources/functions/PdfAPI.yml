@@ -5,3 +5,11 @@ getPdf:
         path: /pdf
         method: get
         cors: true
+
+sendPdf:
+  handler: src/handlers/pdf/sendPdf.handler
+  events:
+    - http:
+        path: /pdf/send
+        method: post
+        cors: true

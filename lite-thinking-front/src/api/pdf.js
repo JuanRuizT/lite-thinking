@@ -23,3 +23,17 @@ export const downloadPDF = async (companyId) => {
 			console.log(error);
 		});
 };
+
+export const sendPDF = async (companyId, email) => {
+	const response = await backentApi
+		.post(`${endpoint}/send`, null, {
+			params: {
+				companyId,
+				email
+			}
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+	return response;
+};
