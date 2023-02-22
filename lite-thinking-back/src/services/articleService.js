@@ -52,3 +52,58 @@ export const getArticlesByCompanyId = async (companyId) => {
 
 	return articles;
 };
+
+export const createArticle = async (article) => {
+	await getCompany(article.companyId);
+
+	try {
+		await dynamodb
+			.put({
+				TableName: tableName,
+				Item: article
+			})
+			.promise();
+	} catch (error) {
+		console.log(error);
+		throw new createError.InternalServerError(error);
+	}
+
+	return article;
+};
+
+export const updateArticle = async (id, article) => {
+	await getArticle(id);
+	await getCompany(article.companyId);
+
+	try {
+		await dynamodb
+			.put({
+				TableName: tableName,
+				Item: article
+			})
+			.promise();
+	} catch (error) {
+		console.log(error);
+		throw new createError.InternalServerError(error);
+	}
+
+	return article;
+};
+
+export const deleteArticle = async (id) => {
+	const article = await getArticle(id);
+
+	try {
+		await dynamodb
+			.delete({
+				TableName: tableName,
+				Key: {id}
+			})
+			.promise();
+	} catch (error) {
+		console.error(error);
+		throw new createError.InternalServerError(error);
+	}
+
+	return article;
+};

@@ -15,7 +15,7 @@
     "target": "es2021",
     "outDir": "lib"
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "src/handlers/pdf/getPdf.js"],
   "exclude": [
     "node_modules/**/*",
     ".serverless/**/*",

@@ -1,10 +1,8 @@
 import PDFKit from 'pdfkit-construct';
-import commonMiddleware from '../../lib/commonMiddleware';
-import {getArticlesByCompanyId} from '../../services/articleService';
-import {getCompany} from '../../services/companyService';
+import {getArticlesByCompanyId} from './articleService';
+import {getCompany} from './companyService';
 
-const response = async (event) => {
-	const {companyId} = event.queryStringParameters;
+export const generatePDF = async (companyId) => {
 	const articles = await getArticlesByCompanyId(companyId);
 	const company = await getCompany(companyId);
 
@@ -33,12 +31,11 @@ const response = async (event) => {
 		}
 	);
 
-	// render tables
 	doc.render();
 
 	const buffers = [];
 
-	await new Promise<void>((resolve) => {
+	await new Promise((resolve) => {
 		doc.on('data', buffers.push.bind(buffers));
 		doc.on('end', () => {
 			resolve();
@@ -48,17 +45,5 @@ const response = async (event) => {
 	});
 
 	const pdf = Buffer.concat(buffers);
-
-	const filename = `PDF${Date.now()}.pdf`;
-	return {
-		statusCode: 200,
-		headers: {
-			'Content-Type': 'application/pdf',
-			'Content-Disposition': `attachment;filename=${filename}`
-		},
-		body: pdf.toString('base64'),
-		isBase64Encoded: true
-	};
+	return pdf;
 };
-
-export const handler = commonMiddleware(response);

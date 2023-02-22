@@ -1,7 +1,7 @@
 import commonMiddleware from '../../lib/commonMiddleware';
 import {getCompany} from '../../services/companyService';
 
-const response = async (event, context) => {
+const response = async (event) => {
 	const {id} = event.pathParameters;
 	const company = await getCompany(id);
 

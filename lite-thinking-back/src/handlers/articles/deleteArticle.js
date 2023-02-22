@@ -1,32 +1,15 @@
-import AWS from 'aws-sdk';
-import {getArticle} from '../../services/articleService';
+import {deleteArticle} from '../../services/articleService';
 import commonMiddleware from '../../lib/commonMiddleware';
-import createError from 'http-errors';
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const tableName = process.env.ARTICLES_TABLE_NAME;
-
-const deleteArticle = async (event, context) => {
+const response = async (event) => {
 	const {id} = event.pathParameters;
 
-	const article = await getArticle(id);
-
-	try {
-		await dynamodb
-			.delete({
-				TableName: tableName,
-				Key: {id}
-			})
-			.promise();
-	} catch (error) {
-		console.error(error);
-		throw new createError.InternalServerError(error);
-	}
+	const deletedArticle = await deleteArticle(id);
 
 	return {
 		statusCode: 200,
-		body: JSON.stringify(article)
+		body: JSON.stringify(deletedArticle)
 	};
 };
 
-export const handler = commonMiddleware(deleteArticle);
+export const handler = commonMiddleware(response);

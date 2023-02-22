@@ -1,16 +1,10 @@
-import AWS from 'aws-sdk';
 import commonMiddleware from '../../lib/commonMiddleware';
-import {getCompany} from '../../services/companyService';
-import createError from 'http-errors';
+import {updateCompany} from '../../services/companyService';
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const tableName = process.env.COMPANIES_TABLE_NAME;
-
-const updateCompany = async (event, context) => {
+const response = async (event) => {
 	const {nit, name, address, phone} = event.body;
 
 	const {id} = event.pathParameters;
-	await getCompany(id);
 
 	const company = {
 		id,
@@ -20,22 +14,12 @@ const updateCompany = async (event, context) => {
 		phone
 	};
 
-	try {
-		await dynamodb
-			.put({
-				TableName: tableName,
-				Item: company
-			})
-			.promise();
-	} catch (error) {
-		console.log(error);
-		throw new createError.InternalServerError(error);
-	}
+	const updatedCompany = await updateCompany(id, company);
 
 	return {
 		statusCode: 201,
-		body: JSON.stringify(company)
+		body: JSON.stringify(updatedCompany)
 	};
 };
 
-export const handler = commonMiddleware(updateCompany);
+export const handler = commonMiddleware(response);

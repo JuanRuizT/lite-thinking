@@ -1,13 +1,9 @@
 import {v4 as uuid} from 'uuid';
-import AWS from 'aws-sdk';
 import commonMiddleware from '../../lib/commonMiddleware';
 import {getCompany} from '../../services/companyService';
-import createError from 'http-errors';
+import {createArticle} from '../../services/articleService';
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const tableName = process.env.ARTICLES_TABLE_NAME;
-
-const createArticle = async (event, context) => {
+const response = async (event) => {
 	const {companyId, code, name, amount} = event.body;
 
 	await getCompany(companyId);
@@ -20,22 +16,12 @@ const createArticle = async (event, context) => {
 		amount
 	};
 
-	try {
-		await dynamodb
-			.put({
-				TableName: tableName,
-				Item: article
-			})
-			.promise();
-	} catch (error) {
-		console.log(error);
-		throw new createError.InternalServerError(error);
-	}
+	const createdArticle = await createArticle(article);
 
 	return {
 		statusCode: 201,
-		body: JSON.stringify(article)
+		body: JSON.stringify(createdArticle)
 	};
 };
 
-export const handler = commonMiddleware(createArticle);
+export const handler = commonMiddleware(response);
